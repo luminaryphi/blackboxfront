@@ -16,7 +16,7 @@
       </div>
       <input type="address" required v-model="amount" placeholder="ETH Amount 0.1 &#128274;">
       <button @click="encrypt">ENCRYPT</button>
-      <p class="label">Test: {{ address }}</p>
+      <p class="label">Test: {{ JSON.stringify(pubkey) }}</p>
     </main>
 
 
@@ -26,7 +26,7 @@
       </a>
         <div class="credit">Built by Trivium</div>
       <a href="https://scrt.network/">
-        <img src="@/assets/scrt.svg" alt="Built by Trivium" class="scrtimg">
+        <img src="@/assets/scrt.svg" alt="Built by Trivium" class="scrtimg"> 
       </a>
         <div class="credit">Powered by Secret</div>
       
@@ -40,7 +40,22 @@ export default {
   data() {
     return {
       address: '',
-      amount: ''
+      amount: '',
+
+      privkey: '',
+      pubkey: Uint8Array,
+
+      cyphtext: ''
+    }
+  },
+  methods: {
+    encrypt() {
+      let keychain = enigmautils.GenerateNewKeyPair();
+      this.privkey = keychain.privkey();
+      this.pubkey = keychain.pubkey;
+    
+      
+
     }
   }
 
